@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace Classes.Webserver.Models
 {
@@ -30,6 +31,7 @@ namespace Classes.Webserver.Models
 
         public ICollection<RoomMessage> RoomMessages { get; set; }
 
+        [JsonIgnore]
         public Floor Floor { get; set; }
     }
 }

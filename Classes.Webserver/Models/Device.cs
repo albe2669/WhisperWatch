@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace Classes.Webserver.Models
 {
@@ -26,6 +27,7 @@ namespace Classes.Webserver.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public DateTime LastUpdated { get; set; }
 
+        [JsonIgnore]
         public RoomMessage RoomMessage { get; set; }
 
         //public User User { get; set; }

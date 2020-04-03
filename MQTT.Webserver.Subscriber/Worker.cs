@@ -43,7 +43,7 @@ namespace MQTT.Webserver.Subscriber
         private IMqttClientOptions options;
 
         // JSON
-        private readonly string jsonSchema = @"{
+        private readonly string jsonSchema = @"{*
             'description': 'A Room Message',
             'type': 'object',
             'properties': {
@@ -93,7 +93,7 @@ namespace MQTT.Webserver.Subscriber
             _logger.LogInformation("Succesfully subscribed to all topics");
         }
 
-        private async void OnMessage(MqttApplicationMessageReceivedEventArgs e)
+        private void OnMessage(MqttApplicationMessageReceivedEventArgs e)
         {
             _logger.LogInformation("Recieved message");
             Message message = new Message();
@@ -116,9 +116,7 @@ namespace MQTT.Webserver.Subscriber
             {
                 IServiceScope scope = _serviceScopeFactory.CreateScope();
                 SchoolContext _context = scope.ServiceProvider.GetRequiredService<SchoolContext>();
-
                 RoomMessage roomMessage = new RoomMessage();
-
                 JObject roomMessageParsed = JObject.Parse(message.Body);
 
                 if (!roomMessageParsed.IsValid(schema))
@@ -127,12 +125,18 @@ namespace MQTT.Webserver.Subscriber
                     return;
                 }
       
-
                 _logger.LogInformation("Json was valid, creating room message and saving it");
 
                 roomMessage.PublisherId = roomMessageParsed.GetValue("client_id").ToString();
                 roomMessage.RoomId = roomMessageParsed.GetValue("room_id").ToObject<long>();
                 roomMessage.Clients = roomMessageParsed.GetValue("client_count").ToObject<long>();
+
+                List<RoomMessage> roomMessages = await _context.RoomMessages.Where(r => r.RoomId == roomMessage.RoomId).ToListAsync();
+
+                foreach (RoomMessage r in roomMessages)
+                {
+                    _context.RoomMessages.Remove(r);
+                }
 
                 _context.RoomMessages.Add(roomMessage);
                 await _context.SaveChangesAsync();
