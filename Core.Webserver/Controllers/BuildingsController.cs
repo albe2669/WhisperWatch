@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Classes.Webserver.Data.SchoolContext;
 using Classes.Webserver.Models;
+using Classes.Webserver.Data.ViewModel;
 
 namespace Core.Webserver.Controllers
 {
@@ -23,16 +24,45 @@ namespace Core.Webserver.Controllers
 
         // GET: api/Buildings
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Building>>> GetBuildings()
+        public async Task<ActionResult<List<BuildingViewStandardWithFloors>>> GetBuildings()
         {
-            return await _context.Buildings.ToListAsync();
+            return await _context.Buildings
+                .Select(b => new BuildingViewStandardWithFloors
+                {
+                    Id = b.Id,
+                    Name = b.Name,
+                    Address = b.Address,
+                    Floors = b.Floors.Select(f => new FloorViewNoBuilding
+                    {
+                        Id = f.Id,
+                        Description = f.Description,
+                        Name = f.Name,
+                        Level = f.Level
+                    }).ToList()
+                })
+                .ToListAsync();
         }
 
         // GET: api/Buildings/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Building>> GetBuilding(long id)
+        public async Task<ActionResult<BuildingViewStandardWithFloors>> GetBuilding(long id)
         {
-            Building building = await _context.Buildings.FindAsync(id);
+            BuildingViewStandardWithFloors building = await _context.Buildings
+                .Where(b => b.Id == id)
+                .Select(b => new BuildingViewStandardWithFloors
+                {
+                    Id = b.Id,
+                    Name = b.Name,
+                    Address = b.Address,
+                    Floors = b.Floors.Select(f => new FloorViewNoBuilding
+                    {
+                        Id = f.Id,
+                        Description = f.Description,
+                        Name = f.Name,
+                        Level = f.Level
+                    }).ToList()
+                })
+                .FirstOrDefaultAsync();
 
             if (building == null)
             {
