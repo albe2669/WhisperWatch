@@ -43,7 +43,7 @@ namespace MQTT.Webserver.Subscriber
         private IMqttClientOptions options;
 
         // JSON
-        private readonly string jsonSchema = @"{*
+        private readonly string jsonSchema = @"{
             'description': 'A Room Message',
             'type': 'object',
             'properties': {
@@ -102,7 +102,7 @@ namespace MQTT.Webserver.Subscriber
 
             InsertMessage(message);
 
-            if(message.Topic == "RoomMessage")
+            if(message.Topic == "whisperwatch/roommessage")
             {
                 parseJson(message);
             }
