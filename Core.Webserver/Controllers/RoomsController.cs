@@ -27,7 +27,7 @@ namespace Core.Webserver.Controllers
         public List<DeviceViewStandard> devices { get; set; }
     }
 
-    [Route("api/building/{buildingId:long}/floor/{floorId:long}/room")]
+    [Route("api/building/{buildingId:long}/floor/{floorId:long}/rooms")]
     [ApiController]
     public class RoomsController : ControllerBase
     {
@@ -38,7 +38,7 @@ namespace Core.Webserver.Controllers
             _context = context;
         }
 
-        // GET: api/Rooms
+        // GET: api/building/{buildingId:long}/floor/{floorId:long}/rooms
         [HttpGet]
         public async Task<ActionResult<IndexRoomModel>> GetRooms([FromRoute] long buildingId, [FromRoute] long floorId)
         {
@@ -97,7 +97,7 @@ namespace Core.Webserver.Controllers
             return viewModel;
         }
 
-        // GET: api/Rooms/5
+        // GET: api/building/{buildingId:long}/floor/{floorId:long}/rooms/5
         [HttpGet("{id}")]
         public async Task<ActionResult<AlteredRoomModel>> GetRoom(long id)
         {
