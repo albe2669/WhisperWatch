@@ -20,4 +20,14 @@ namespace Classes.Webserver.Data.ViewModel
         public string Name { get; set; }
         public long Area { get; set; }
     }
+
+    public class RoomViewWithDevices
+    {
+        public long Id { get; set; }
+        public long FloorId { get; set; }
+        public string Number { get; set; }
+        public string Name { get; set; }
+        public long Area { get; set; }
+        public List<DeviceViewNoRoom> Devices { get; set; }
+    }
 }
