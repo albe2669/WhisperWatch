@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Classes.Webserver.Data.SchoolContext;
 using Classes.Webserver.Models;
+using Classes.Webserver.Data.ViewModel;
 
 namespace Core.Webserver.Controllers
 {
@@ -15,7 +16,7 @@ namespace Core.Webserver.Controllers
         public IList<Floor> Floors { get; set; }
     }
 
-    [Route("api/building/{buildingId:long}/floor")]
+    [Route("api/building/{buildingId:long}/floors")]
     [ApiController]
     public class FloorsController : ControllerBase
     {
@@ -26,20 +27,45 @@ namespace Core.Webserver.Controllers
             _context = context;
         }
 
-        // GET: api/Floors
+        // GET: api/building/{buildingId:long}/floors
         [HttpGet]
-        public async Task<ActionResult<List<Floor>>> GetFloors([FromRoute] long buildingId)
+        public async Task<ActionResult<List<FloorViewStandard>>> GetFloors([FromRoute] long buildingId)
         {
-            var floors = _context.Floors.Where(f => f.BuildingId == buildingId);
-
-            return await floors.ToListAsync();
+            return await _context.Floors
+                .Where(f => f.BuildingId == buildingId)
+                .Select(f => new FloorViewStandard
+                {
+                    Id = f.Id,
+                    BuildingId = f.BuildingId,
+                    Level = f.Level,
+                    Name = f.Name,
+                    Description = f.Description
+                }).ToListAsync();
         }
 
-        // GET: api/Floors/5
+        // GET: api/building/{buildingId:long}/floors/{id:long}
         [HttpGet("{id}")]
-        public async Task<ActionResult<Floor>> GetFloor(long id)
+        public async Task<ActionResult<FloorViewRooms>> GetFloor(long buildingId, long id)
         {
-            Floor floor = await _context.Floors.FindAsync(id);
+
+            FloorViewRooms floor = await _context.Floors
+                .Where(f => f.Id == id)
+                .Where(f => f.BuildingId == buildingId)
+                .Select(f => new FloorViewRooms
+                {
+                    Id = f.Id,
+                    BuildingId = f.BuildingId,
+                    Level = f.Level,
+                    Name = f.Name,
+                    Description = f.Description,
+                    Rooms = f.Rooms.Select(r => new RoomViewNoFloor
+                    {
+                        Id = r.Id,
+                        Name = r.Name,
+                        Number = r.Number,
+                        Area = r.Area
+                    }).ToList()
+                }).FirstOrDefaultAsync();
 
             if (floor == null)
             {

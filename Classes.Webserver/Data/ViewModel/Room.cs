@@ -12,4 +12,12 @@ namespace Classes.Webserver.Data.ViewModel
         public string Name { get; set; }
         public long Area { get; set; }
     }
+
+    public class RoomViewNoFloor
+    {
+        public long Id { get; set; }
+        public string Number { get; set; }
+        public string Name { get; set; }
+        public long Area { get; set; }
+    }
 }
