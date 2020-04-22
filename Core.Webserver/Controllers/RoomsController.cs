@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Classes.Webserver.Data.SchoolContext;
 using Classes.Webserver.Models;
+using Classes.Webserver.Data.ViewModel;
 
 namespace Core.Webserver.Controllers
 {
@@ -22,8 +23,8 @@ namespace Core.Webserver.Controllers
 
     public class AlteredRoomModel
     {
-        public Room room { get; set; }
-        public RoomMessage roomMessages { get; set; }
+        public RoomViewStandard room { get; set; }
+        public List<DeviceViewStandard> devices { get; set; }
     }
 
     [Route("api/building/{buildingId:long}/floor/{floorId:long}/room")]
@@ -39,31 +40,51 @@ namespace Core.Webserver.Controllers
 
         // GET: api/Rooms
         [HttpGet]
-        public async Task<ActionResult<List<Room>>> GetRooms([FromRoute] long buildingId, [FromRoute] long floorId)
+        public async Task<ActionResult<IndexRoomModel>> GetRooms([FromRoute] long buildingId, [FromRoute] long floorId)
         {
             var viewModel = new IndexRoomModel();
 
             var rooms = await _context.Rooms
                 .Where(f => f.FloorId == floorId)
-                .Include(r => r.RoomMessages)
-                .ThenInclude(t => t.Devices)
+                .Select(r => new RoomViewStandard { 
+                    Id = r.Id,
+                    FloorId = r.FloorId,
+                    Number = r.Number,
+                    Name = r.Name,
+                    Area = r.Area
+                })
                 .ToListAsync();
-            /*foreach (Room room in rooms)
+
+            foreach (RoomViewStandard room in rooms)
             {
-                
+              
                 if (room == null)
                 {
                     continue;
                 }
 
                 AlteredRoomModel model = new AlteredRoomModel();
-                model.room = room;
-                model.roomMessages = await _context.RoomMessages
+                RoomMessage message = await _context.RoomMessages
                     .Where(x => x.RoomId == room.Id)
-                    .OrderBy(x => x.LastUpdated)
-                    .Include(s => s.Devices)
+                    .Where(x => x.LastUpdated > DateTime.Now.AddMinutes(-10))
                     .AsNoTracking()
                     .FirstOrDefaultAsync();
+
+                if (message == null)
+                {
+                    continue;
+                }
+
+                model.room = room;
+                model.devices = await _context.Devices
+                    .Where(d => d.RoomMessageId == message.Id)
+                    .Select(p => new DeviceViewStandard
+                    {
+                        Id = p.Id,
+                        MacAddress = p.MacAdress,
+                        SignalStrength = p.SignalStrength
+                    })
+                    .ToListAsync();
 
                 if (model == null)
                 {
@@ -71,24 +92,59 @@ namespace Core.Webserver.Controllers
                 }
 
                 viewModel.Rooms.Add(model);
-            }*/
+            }
 
-            return rooms;
+            return viewModel;
         }
 
         // GET: api/Rooms/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Room>> GetRoom(long id)
+        public async Task<ActionResult<AlteredRoomModel>> GetRoom(long id)
         {
-            var room = await _context.Rooms.FindAsync(id);
+            var room = await _context.Rooms
+                .Select(r => new RoomViewStandard {
+                    Id = r.Id,
+                    FloorId = r.FloorId,
+                    Number = r.Number,
+                    Name = r.Name,
+                    Area = r.Area
+                })
+                .Where(r => r.Id == id)
+                .FirstOrDefaultAsync();
 
             if (room == null)
             {
                 return NotFound();
             }
 
-            return room;
+            AlteredRoomModel model = new AlteredRoomModel();
+            RoomMessage message = await _context.RoomMessages
+                .Where(x => x.RoomId == room.Id)
+                .Where(x => x.LastUpdated > DateTime.Now.AddMinutes(-10))
+                .AsNoTracking()
+                .FirstOrDefaultAsync();
+
+
+            model.room = room;
+
+            if (message == null)
+            {
+                return model;
+            }
+
+            model.devices = await _context.Devices
+                .Where(d => d.RoomMessageId == message.Id)
+                .Select(p => new DeviceViewStandard
+                {
+                    Id = p.Id,
+                    MacAddress = p.MacAdress,
+                    SignalStrength = p.SignalStrength
+                })
+                .ToListAsync();
+            
+            return model;
         }
+    }
 
         /*
         // PUT: api/Rooms/5
@@ -155,5 +211,4 @@ namespace Core.Webserver.Controllers
         {
             return _context.Rooms.Any(e => e.Id == id);
         }*/
-    }
 }
