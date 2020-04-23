@@ -16,7 +16,7 @@ namespace Core.Webserver.Controllers
         public IList<Floor> Floors { get; set; }
     }
 
-    [Route("api/building/{buildingId:long}/floors")]
+    [Route("api/buildings/{buildingId:long}/floors")]
     [ApiController]
     public class FloorsController : ControllerBase
     {

@@ -11,7 +11,7 @@ using Classes.Webserver.Data.ViewModel;
 
 namespace Core.Webserver.Controllers
 {
-    [Route("api/building")]
+    [Route("api/buildings")]
     [ApiController]
     public class BuildingsController : ControllerBase
     {

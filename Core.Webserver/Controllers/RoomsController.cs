@@ -11,7 +11,7 @@ using Classes.Webserver.Data.ViewModel;
 
 namespace Core.Webserver.Controllers
 {
-    [Route("api/building/{buildingId:long}/floor/{floorId:long}/rooms")]
+    [Route("api/buildings/{buildingId:long}/floors/{floorId:long}/rooms")]
     [ApiController]
     public class RoomsController : ControllerBase
     {

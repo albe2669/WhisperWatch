@@ -11,7 +11,7 @@ using Classes.Webserver.Data.MessageContext;
 
 namespace Core.Webserver.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/messages")]
     [ApiController]
     public class MessagesController : ControllerBase
     {
