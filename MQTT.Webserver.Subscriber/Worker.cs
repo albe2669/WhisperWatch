@@ -131,13 +131,6 @@ namespace MQTT.Webserver.Subscriber
                 roomMessage.RoomId = roomMessageParsed.GetValue("room_id").ToObject<long>();
                 roomMessage.Clients = roomMessageParsed.GetValue("client_count").ToObject<long>();
 
-                List<RoomMessage> roomMessages = await _context.RoomMessages.Where(r => r.RoomId == roomMessage.RoomId).ToListAsync();
-
-                foreach (RoomMessage r in roomMessages)
-                {
-                    _context.RoomMessages.Remove(r);
-                }
-
                 _context.RoomMessages.Add(roomMessage);
                 await _context.SaveChangesAsync();
 

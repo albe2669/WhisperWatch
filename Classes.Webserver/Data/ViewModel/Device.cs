@@ -16,6 +16,6 @@ namespace Classes.Webserver.Data.ViewModel
     public class DeviceViewNoRoom
     {
         public string MacAddress { get; set; }
-        public int SignalStrength { get; set; }
+        public double SignalStrength { get; set; }
     }
 }

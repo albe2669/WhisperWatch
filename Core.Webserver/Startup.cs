@@ -11,6 +11,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+
 
 using Microsoft.AspNetCore.Http;
 using Classes.Webserver.Models;
@@ -47,6 +52,10 @@ namespace Core.Webserver
 
             services.AddControllers();
             services.AddHostedService<Worker>();
+            services.AddSpaStaticFiles(configuration =>
+            {
+                configuration.RootPath = "FrontEnd/public";
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -59,6 +68,10 @@ namespace Core.Webserver
 
             app.UseHttpsRedirection();
 
+            // SPA stuff
+            app.UseSpaStaticFiles();
+            app.UseStaticFiles();
+
             app.UseRouting();
 
             app.UseAuthorization();
@@ -66,6 +79,16 @@ namespace Core.Webserver
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+            });
+
+            app.UseSpa(spa =>
+            {
+                spa.Options.SourcePath = "FrontEnd";
+
+                /*if (env.IsDevelopment())
+                {
+                    spa.UseProxyToSpaDevelopmentServer("http://127.0.0.1:5000");
+                }*/
             });
         }
     }

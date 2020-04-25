@@ -1,0 +1,325 @@
+[
+    {
+        "id": 1,
+        "floorId": 1,
+        "number": "7.000",
+        "name": "DEPOT",
+        "area": 41,
+        "devices": [
+            {
+                "macAddress": "00:66:4b:bc:98:e2",
+                "signalStrength": -59
+            },
+            {
+                "macAddress": "f0:78:07:b5:08:05",
+                "signalStrength": -78
+            },
+            {
+                "macAddress": "e2:bd:39:31:e5:26",
+                "signalStrength": -74
+            },
+            {
+                "macAddress": "da:a1:19:01:85:98",
+                "signalStrength": -65
+            },
+            {
+                "macAddress": "d8:55:75:1e:0b:cd",
+                "signalStrength": -98
+            },
+            {
+                "macAddress": "c6:60:3d:d4:64:16",
+                "signalStrength": -73
+            },
+            {
+                "macAddress": "c4:62:ea:b4:c0:40",
+                "signalStrength": -78
+            },
+            {
+                "macAddress": "c2:72:41:34:f8:8a",
+                "signalStrength": -97
+            },
+            {
+                "macAddress": "b6:df:57:1a:e8:bf",
+                "signalStrength": -94
+            },
+            {
+                "macAddress": "b4:ae:2b:cf:75:ac",
+                "signalStrength": -54
+            },
+            {
+                "macAddress": "b2:b1:82:7d:a0:a8",
+                "signalStrength": -98
+            },
+            {
+                "macAddress": "ae:bd:85:90:75:25",
+                "signalStrength": -74
+            },
+            {
+                "macAddress": "94:e6:f7:ba:f8:dd",
+                "signalStrength": -60
+            },
+            {
+                "macAddress": "88:9b:39:33:df:cd",
+                "signalStrength": -71
+            },
+            {
+                "macAddress": "54:60:09:59:a0:0c",
+                "signalStrength": -82
+            },
+            {
+                "macAddress": "4e:a1:00:3d:53:8e",
+                "signalStrength": -74
+            },
+            {
+                "macAddress": "48:27:ea:4a:3a:90",
+                "signalStrength": -61
+            },
+            {
+                "macAddress": "40:30:04:9a:4a:93",
+                "signalStrength": -67
+            },
+            {
+                "macAddress": "3a:b3:48:48:37:48",
+                "signalStrength": -74
+            },
+            {
+                "macAddress": "38:71:de:1b:14:62",
+                "signalStrength": -98
+            },
+            {
+                "macAddress": "30:74:96:e2:25:01",
+                "signalStrength": -62
+            },
+            {
+                "macAddress": "1e:77:b0:6f:8e:4c",
+                "signalStrength": -72
+            },
+            {
+                "macAddress": "10:4a:7d:e0:68:a2",
+                "signalStrength": -63
+            },
+            {
+                "macAddress": "04:d3:b0:e9:6a:d8",
+                "signalStrength": -26
+            },
+            {
+                "macAddress": "f4:f5:d8:03:16:cc",
+                "signalStrength": -70
+            },
+            {
+                "macAddress": "fa:74:70:64:89:d2",
+                "signalStrength": -66
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "floorId": 1,
+        "number": "7.000",
+        "name": "GANG",
+        "area": 337,
+        "devices": [
+            {
+                "macAddress": "00:66:4b:bc:98:e2",
+                "signalStrength": -78
+            },
+            {
+                "macAddress": "f2:be:73:fb:25:64",
+                "signalStrength": -85
+            },
+            {
+                "macAddress": "f0:78:07:b5:08:05",
+                "signalStrength": -74
+            },
+            {
+                "macAddress": "da:a1:19:e9:72:78",
+                "signalStrength": -90
+            },
+            {
+                "macAddress": "da:82:83:be:f1:f8",
+                "signalStrength": -74
+            },
+            {
+                "macAddress": "da:60:7a:67:07:63",
+                "signalStrength": -88
+            },
+            {
+                "macAddress": "d0:d2:b0:40:ee:99",
+                "signalStrength": -98
+            },
+            {
+                "macAddress": "c4:62:ea:b4:c0:40",
+                "signalStrength": -72
+            },
+            {
+                "macAddress": "c2:5d:f9:c5:41:23",
+                "signalStrength": -74
+            },
+            {
+                "macAddress": "88:9b:39:33:df:cd",
+                "signalStrength": -75
+            },
+            {
+                "macAddress": "88:3d:24:29:00:02",
+                "signalStrength": -85
+            },
+            {
+                "macAddress": "78:28:ca:cc:3b:97",
+                "signalStrength": -58
+            },
+            {
+                "macAddress": "6c:ad:f8:a5:05:78",
+                "signalStrength": -98
+            },
+            {
+                "macAddress": "62:01:10:f3:fd:ca",
+                "signalStrength": -90
+            },
+            {
+                "macAddress": "5c:aa:fd:f6:9f:8b",
+                "signalStrength": -54
+            },
+            {
+                "macAddress": "56:96:f7:2f:a6:ba",
+                "signalStrength": -74
+            },
+            {
+                "macAddress": "48:27:ea:4a:3a:90",
+                "signalStrength": -65
+            },
+            {
+                "macAddress": "42:1c:f8:35:d4:ff",
+                "signalStrength": -66
+            },
+            {
+                "macAddress": "40:30:04:9a:4a:93",
+                "signalStrength": -71
+            },
+            {
+                "macAddress": "30:74:96:e2:25:01",
+                "signalStrength": -63
+            },
+            {
+                "macAddress": "2a:b9:66:55:33:05",
+                "signalStrength": -67
+            },
+            {
+                "macAddress": "1a:a3:2d:0b:27:25",
+                "signalStrength": -74
+            },
+            {
+                "macAddress": "10:4a:7d:e0:68:a2",
+                "signalStrength": -56
+            },
+            {
+                "macAddress": "10:4a:7d:0c:8e:c7",
+                "signalStrength": -56
+            },
+            {
+                "macAddress": "0a:12:29:c3:1a:20",
+                "signalStrength": -68
+            },
+            {
+                "macAddress": "08:21:ef:03:33:bf",
+                "signalStrength": -98
+            },
+            {
+                "macAddress": "f4:f5:d8:03:16:cc",
+                "signalStrength": -66
+            },
+            {
+                "macAddress": "fe:55:5f:f4:42:88",
+                "signalStrength": -68
+            }
+        ]
+    },
+    {
+        "id": 3,
+        "floorId": 1,
+        "number": "7.001",
+        "name": "MØDELOKALE",
+        "area": 41,
+        "devices": [
+            {
+                "macAddress": "00:66:4b:bc:98:e2",
+                "signalStrength": -74
+            },
+            {
+                "macAddress": "c4:62:ea:b4:c0:40",
+                "signalStrength": -87
+            },
+            {
+                "macAddress": "c2:5d:f9:c5:41:23",
+                "signalStrength": -79
+            },
+            {
+                "macAddress": "b4:ae:2b:cf:75:ac",
+                "signalStrength": -80
+            },
+            {
+                "macAddress": "aa:d7:bf:c4:a0:54",
+                "signalStrength": -73
+            },
+            {
+                "macAddress": "94:e6:f7:ba:f8:dd",
+                "signalStrength": -61
+            },
+            {
+                "macAddress": "8e:1d:2d:50:9c:17",
+                "signalStrength": -98
+            },
+            {
+                "macAddress": "88:9b:39:33:df:cd",
+                "signalStrength": -80
+            },
+            {
+                "macAddress": "82:66:e5:5b:10:a7",
+                "signalStrength": -98
+            },
+            {
+                "macAddress": "7e:06:04:71:11:30",
+                "signalStrength": -98
+            },
+            {
+                "macAddress": "72:2e:f6:3d:2f:8c",
+                "signalStrength": -85
+            },
+            {
+                "macAddress": "5c:aa:fd:f6:9f:8b",
+                "signalStrength": -64
+            },
+            {
+                "macAddress": "40:30:04:9a:4a:93",
+                "signalStrength": -78
+            },
+            {
+                "macAddress": "3e:fa:d9:9e:c1:be",
+                "signalStrength": -74
+            },
+            {
+                "macAddress": "30:74:96:e2:25:01",
+                "signalStrength": -66
+            },
+            {
+                "macAddress": "10:4a:7d:5d:88:71",
+                "signalStrength": -73
+            },
+            {
+                "macAddress": "10:4a:7d:50:c7:de",
+                "signalStrength": -68
+            },
+            {
+                "macAddress": "08:21:ef:03:33:bf",
+                "signalStrength": -80
+            },
+            {
+                "macAddress": "da:a1:19:7c:7a:14",
+                "signalStrength": -98
+            },
+            {
+                "macAddress": "e2:50:65:57:a4:fe",
+                "signalStrength": -68
+            }
+        ]
+    }
+]

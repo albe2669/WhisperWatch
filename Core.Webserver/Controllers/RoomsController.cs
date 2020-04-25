@@ -39,26 +39,45 @@ namespace Core.Webserver.Controllers
 
             foreach (RoomViewWithDevices room in rooms.Reverse<RoomViewWithDevices>())
             {
-                RoomMessage message = await _context.RoomMessages
+                List<DeviceViewNoRoom> devices = new List<DeviceViewNoRoom>();
+                var messages = await _context.RoomMessages
                     .Where(x => x.RoomId == room.Id)
-                    //.Where(x => x.LastUpdated > DateTime.Now.AddMinutes(-10))
+                    .Where(x => x.LastUpdated > DateTime.Now.AddMinutes(-5))
+                    .Select(m => new
+                    {
+                        Id = m.Id,
+                        Devices = m.Devices.Select(d => new DeviceViewNoRoom
+                        {
+                            MacAddress = d.MacAdress,
+                            SignalStrength = d.SignalStrength
+                        }).ToList()
+                    })
                     .AsNoTracking()
-                    .FirstOrDefaultAsync();
+                    .ToListAsync();
 
-                if (message == null)
+                if (messages == null || messages.Count == 0)
                 {
                     rooms.Remove(room);
                     continue;
                 }
 
-                room.Devices = await _context.Devices
-                    .Where(d => d.RoomMessageId == message.Id)
-                    .Select(p => new DeviceViewNoRoom
-                    {
-                        MacAddress = p.MacAdress,
-                        SignalStrength = p.SignalStrength
-                    })
-                    .ToListAsync();
+                foreach (var message in messages)
+                {
+                    devices.AddRange(message.Devices);
+                }
+
+                devices.GroupBy(d => d.MacAddress);
+
+                List<DeviceViewNoRoom> deviceGroups =
+                    (from device in devices
+                     group device by device.MacAddress into deviceGroup
+                     select new DeviceViewNoRoom
+                     {
+                         MacAddress = deviceGroup.Key,
+                         SignalStrength = deviceGroup.Average(x => x.SignalStrength)
+                     }).ToList();
+                room.Devices = deviceGroups;
+
             }
 
             return rooms;
@@ -88,7 +107,7 @@ namespace Core.Webserver.Controllers
 
             RoomMessage message = await _context.RoomMessages
                 .Where(x => x.RoomId == room.Id)
-                //.Where(x => x.LastUpdated > DateTime.Now.AddMinutes(-10))
+                .Where(x => x.LastUpdated > DateTime.Now.AddMinutes(-10))
                 .AsNoTracking()
                 .FirstOrDefaultAsync();
 
