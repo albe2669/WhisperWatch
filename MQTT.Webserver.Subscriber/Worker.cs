@@ -28,6 +28,7 @@ using Classes.Webserver.Data.SchoolContext;
 using Newtonsoft.Json.Schema;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
+using System.Text.RegularExpressions;
 
 namespace MQTT.Webserver.Subscriber
 {
@@ -47,13 +48,11 @@ namespace MQTT.Webserver.Subscriber
             'description': 'A Room Message',
             'type': 'object',
             'properties': {
-                'client_id': {'type': 'string'},
-                'room_id': {'type': 'integer'},
-                'client_count': {'type': 'integer'},
-                'clients': {
+                'r': {'type': 'integer'},
+                'c': {
                     'type': 'array',
-                    'signal_strength': 'int',
-                    'mac_address': 'string'
+                    's': 'int',
+                    'm': 'string'
                 },
              }
         }";
@@ -114,10 +113,11 @@ namespace MQTT.Webserver.Subscriber
 
             try
             {
+                JObject roomMessageParsed = JObject.Parse(message.Body);
+
                 IServiceScope scope = _serviceScopeFactory.CreateScope();
                 SchoolContext _context = scope.ServiceProvider.GetRequiredService<SchoolContext>();
                 RoomMessage roomMessage = new RoomMessage();
-                JObject roomMessageParsed = JObject.Parse(message.Body);
 
                 if (!roomMessageParsed.IsValid(schema))
                 {
@@ -127,24 +127,23 @@ namespace MQTT.Webserver.Subscriber
       
                 _logger.LogInformation("Json was valid, creating room message and saving it");
 
-                roomMessage.PublisherId = roomMessageParsed.GetValue("client_id").ToString();
-                roomMessage.RoomId = roomMessageParsed.GetValue("room_id").ToObject<long>();
-                roomMessage.Clients = roomMessageParsed.GetValue("client_count").ToObject<long>();
+                JArray clients = (JArray)roomMessageParsed["c"];
 
-                _context.RoomMessages.Add(roomMessage);
-                await _context.SaveChangesAsync();
+                roomMessage.Clients = clients.Count();
+                roomMessage.PublisherId = "deprecated";
+                roomMessage.RoomId = roomMessageParsed.GetValue("r").ToObject<long>();
 
-                JArray clients = (JArray)roomMessageParsed["clients"];
                 foreach (JObject client in clients)
                 {
                     Device device = new Device();
-                    device.MacAdress = client.GetValue("mac_address").ToObject<string>();
-                    device.SignalStrength = client.GetValue("signal_strength").ToObject<int>();
+                    device.MacAdress = Regex.Replace(client.GetValue("m").ToObject<string>(), ".{8}", "$0:");
+                    device.SignalStrength = client.GetValue("s").ToObject<int>();
                     device.RoomMessage = roomMessage;
 
                     _context.Devices.Add(device);
                 }
 
+                _context.RoomMessages.Add(roomMessage);
                 await _context.SaveChangesAsync();
             }
             catch (JsonReaderException jex)
