@@ -1,20 +1,21 @@
-# Introduction 
-TODO: Give a short introduction of your project. Let this section explain the objectives or the motivation behind this project. 
+# WhisperWatch
+This is a website, mqtt subscriber and backend for the WhisperWatch application. It subscribes to a 
+Webserver is build with the ASP.NET Core Web Application API template.
 
-# Getting Started
-TODO: Guide users through getting your code up and running on their own system. In this section you can talk about:
-1.	Installation process
-2.	Software dependencies
-3.	Latest releases
-4.	API references
+## Dependencies
+- Node.Js
+- NPM
+- .NET Core 3.1
 
-# Build and Test
-TODO: Describe and show how to build your code and run the tests. 
+## Getting started
+- Configure database settings in `Core.Webserver/appsettings.json`
+- Configure mqtt host, optional password and topic in settings in `MQTT.Webserver.Subscriber/appsettings.json`
+- Open a command line in `Core.Webserver/FrontEnd`
+- Run ``npm install``
+- Run ``npm run build``
+- Open solution in Visual Studio 2019
+- Build
 
-# Contribute
-TODO: Explain how other users and developers can contribute to make your code better. 
+### Optional
+Files found under `Classes.Webserver/Data/*Context` can be configured to use other initialization data.
 
-If you want to learn more about creating good readme files then refer the following [guidelines](https://docs.microsoft.com/en-us/azure/devops/repos/git/create-a-readme?view=azure-devops). You can also seek inspiration from the below readme files:
-- [ASP.NET Core](https://github.com/aspnet/Home)
-- [Visual Studio Code](https://github.com/Microsoft/vscode)
-- [Chakra Core](https://github.com/Microsoft/ChakraCore)
