@@ -2,7 +2,7 @@
     import FloorPlanVisualiser from './components/FloorPlanVisualiser.svelte';
     import { currentFloor } from './stores.js';
 
-    export let name = 'WhisperWatch';
+    export const name = 'WhisperWatch';
 
     function updateFloor(floor) {
         console.log('updating to ' + floor);
